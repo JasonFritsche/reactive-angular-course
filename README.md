@@ -1,3 +1,6 @@
+## Hello World :)
+This is a clone of the [Reactive Angular Course repo](https://github.com/angular-university/reactive-angular-course)
+I'll be following along and learning a thing or two about RxJS.
 
 ## The Reactive Angular Course
 
