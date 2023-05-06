@@ -9,9 +9,9 @@ import { CourseDialogComponent } from "../course-dialog/course-dialog.component"
   styleUrls: ["./courses-card-list.component.scss"],
 })
 export class CoursesCardListComponent {
+  @Input() courses: Course[] = [];
+
   constructor(private dialog: MatDialog) {}
-  @Input()
-  courses: Course[] = [];
 
   editCourse(course: Course) {
     const dialogConfig = new MatDialogConfig();
