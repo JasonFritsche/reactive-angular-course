@@ -20,6 +20,7 @@ import { LoadingService } from "../loading/loading.service";
   selector: "course-dialog",
   templateUrl: "./course-dialog.component.html",
   styleUrls: ["./course-dialog.component.css"],
+  providers: [LoadingService],
 })
 export class CourseDialogComponent implements AfterViewInit {
   form: FormGroup;
@@ -41,6 +42,8 @@ export class CourseDialogComponent implements AfterViewInit {
       releasedAt: [moment(), Validators.required],
       longDescription: [course.longDescription, Validators.required],
     });
+
+    this.loadingService.loadingOn();
   }
 
   ngAfterViewInit() {}
