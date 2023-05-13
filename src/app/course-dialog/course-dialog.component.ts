@@ -16,7 +16,6 @@ import { throwError } from "rxjs";
 import { CoursesService } from "../services/courses.service";
 import { LoadingService } from "../loading/loading.service";
 import { MessagesService } from "../messages/messages.service";
-import { error } from "console";
 
 @Component({
   selector: "course-dialog",
@@ -55,11 +54,11 @@ export class CourseDialogComponent implements AfterViewInit {
     const saveCourses$ = this.coursesService
       .saveCourse(this.course.id, changes)
       .pipe(
-        catchError((error) => {
+        catchError((err) => {
           const message = "Could not save course";
-          console.log(message, error);
+          console.log(message, err);
           this.messagesService.showErrors(message);
-          return throwError(error);
+          return throwError(err);
         })
       );
 
