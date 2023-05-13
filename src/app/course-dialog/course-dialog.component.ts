@@ -62,10 +62,9 @@ export class CourseDialogComponent implements AfterViewInit {
         })
       );
 
-    this.loadingService.showLoaderUntilCompleted(saveCourses$).subscribe(
-      (value) => this.dialogRef.close(value),
-      (err) => alert(`Error saving course ${err}`)
-    );
+    this.loadingService
+      .showLoaderUntilCompleted(saveCourses$)
+      .subscribe((value) => this.dialogRef.close(value));
   }
 
   close() {
