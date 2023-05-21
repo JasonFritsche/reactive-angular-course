@@ -1,18 +1,32 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { User } from "../model/user";
+import { map, shareReplay, tap } from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthStore {
-  userr$: Observable<User>;
+  private subject = new BehaviorSubject<User>(null); // initial value of null meaning user is not yet authenticated
+  public user$: Observable<User> = this.subject.asObservable();
+
   isLoggedIn$: Observable<boolean>;
   isLoggedOut$: Observable<boolean>;
 
-  login(email: string, password: string): Observable<User> {
-    throw new Error("Method not implemented.");
+  constructor(private http: HttpClient) {
+    this.isLoggedIn$ = this.user$.pipe(map((user) => !!user));
+    this.isLoggedOut$ = this.isLoggedIn$.pipe(map((loggedIn) => !loggedIn));
   }
 
-  logout(): void {}
+  login(email: string, password: string): Observable<User> {
+    return this.http.post<User>("/api/login", { email, password }).pipe(
+      tap((user) => this.subject.next(user)),
+      shareReplay()
+    );
+  }
+
+  logout(): void {
+    this.subject.next(null);
+  }
 }
