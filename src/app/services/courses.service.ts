@@ -13,7 +13,7 @@ export class CoursesService {
 
   loadCourseById(courseId: number) {
     return this.http
-      .get<Course>("/api/courses/${courseId}")
+      .get<Course>(`/api/courses/${courseId}`)
       .pipe(shareReplay());
   }
 
